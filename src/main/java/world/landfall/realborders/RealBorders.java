@@ -8,6 +8,7 @@ import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import world.landfall.realborders.commands.WorldBorderCommand;
 import world.landfall.realborders.components.EnforceBorderComponent;
 import world.landfall.realborders.resources.WorldBorderResource;
 import world.landfall.realborders.systems.EnforceBorderSystem;
@@ -28,6 +29,8 @@ public class RealBorders extends JavaPlugin {
         ENFORCE_BORDER_COMP = this.getEntityStoreRegistry().registerComponent(EnforceBorderComponent.class, EnforceBorderComponent::new);
         getEntityStoreRegistry().registerSystem(new EnforceBorderSystem());
         getEntityStoreRegistry().registerSystem(new PlayerJoinSystem());
+
+        getCommandRegistry().registerCommand(new WorldBorderCommand());
 
     }
 }

@@ -9,6 +9,7 @@ import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.tick.DelayedEntitySystem;
 import com.hypixel.hytale.component.system.tick.TickingSystem;
 import com.hypixel.hytale.math.vector.Vector3d;
+import com.hypixel.hytale.math.vector.Vector2i;
 import com.hypixel.hytale.protocol.Color;
 import com.hypixel.hytale.protocol.SoundCategory;
 import com.hypixel.hytale.server.core.asset.type.particle.config.Particle;
@@ -26,7 +27,6 @@ import com.hypixel.hytale.server.core.universe.world.ParticleUtil;
 import com.hypixel.hytale.server.core.universe.world.SoundUtil;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.worldgen.loader.util.ColorUtil;
-import org.joml.Vector2i;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import world.landfall.realborders.RealBorders;
@@ -108,7 +108,7 @@ public class EnforceBorderSystem extends DelayedEntitySystem<EntityStore> {
             });
         }
     }
-    private static int hurtLevel(Vector2i center, int radius, Vector3d pos) {
+    private static int hurtLevel(com.hypixel.hytale.math.vector.Vector2i center, int radius, Vector3d pos) {
         var center3d = new Vector3d(center.x, 0, center.y);
         center3d.subtract(pos);
         if (Math.abs(center3d.x) > radius || Math.abs(center3d.z) > radius) {
