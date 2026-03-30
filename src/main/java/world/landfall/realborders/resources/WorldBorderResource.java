@@ -1,16 +1,30 @@
 package world.landfall.realborders.resources;
 
+import com.hypixel.hytale.codec.Codec;
+import com.hypixel.hytale.codec.KeyedCodec;
+import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.component.Resource;
 import com.hypixel.hytale.math.vector.Vector2i;
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore;
 import org.jspecify.annotations.Nullable;
 
 public class WorldBorderResource implements Resource<ChunkStore> {
-    public final int blockRadius;
-    public final com.hypixel.hytale.math.vector.Vector2i center;
+
+
+    public int blockRadius;
+    public com.hypixel.hytale.math.vector.Vector2i center;
+    public static final BuilderCodec<WorldBorderResource> CODEC =
+            BuilderCodec.builder(WorldBorderResource.class, WorldBorderResource::create)
+                    .append(new KeyedCodec<Integer>("Radius", Codec.INTEGER),
+                            (data, value) -> data.blockRadius = value,
+                            (data) -> data.blockRadius).add()
+                    .append(new KeyedCodec<>("Center", Vector2i.CODEC),
+                            (data, value) -> data.center = value,
+                            (data) -> data.center).add()
+                    .build();
 
     private WorldBorderResource() {
-        blockRadius = 50;
+        blockRadius = 200;
         center = new Vector2i(0, 0);
     }
 

@@ -25,7 +25,7 @@ public class RealBorders extends JavaPlugin {
 
     @Override
     protected void setup() {
-        WORLD_BORDER_RES = this.getChunkStoreRegistry().registerResource(WorldBorderResource.class, WorldBorderResource::create);
+        WORLD_BORDER_RES = this.getChunkStoreRegistry().registerResource(WorldBorderResource.class, "world_border", WorldBorderResource.CODEC);
         ENFORCE_BORDER_COMP = this.getEntityStoreRegistry().registerComponent(EnforceBorderComponent.class, EnforceBorderComponent::new);
         getEntityStoreRegistry().registerSystem(new EnforceBorderSystem());
         getEntityStoreRegistry().registerSystem(new PlayerJoinSystem());
