@@ -13,6 +13,7 @@ public class WorldBorderResource implements Resource<ChunkStore> {
 
     public int blockRadius;
     public com.hypixel.hytale.math.vector.Vector2i center;
+    public boolean enabled;
     public static final BuilderCodec<WorldBorderResource> CODEC =
             BuilderCodec.builder(WorldBorderResource.class, WorldBorderResource::create)
                     .append(new KeyedCodec<Integer>("Radius", Codec.INTEGER),
@@ -26,15 +27,18 @@ public class WorldBorderResource implements Resource<ChunkStore> {
     private WorldBorderResource() {
         blockRadius = 200;
         center = new Vector2i(0, 0);
+        enabled = false;
     }
 
     private WorldBorderResource(WorldBorderResource c) {
         blockRadius = c.blockRadius;
         center = c.center;
+        enabled = c.enabled;
     }
-    private WorldBorderResource(int blockRadius, com.hypixel.hytale.math.vector.Vector2i center) {
+    private WorldBorderResource(int blockRadius, com.hypixel.hytale.math.vector.Vector2i center, boolean enabled) {
         this.blockRadius = blockRadius;
         this.center = center;
+        this.enabled = enabled;
     }
 
 
@@ -42,8 +46,8 @@ public class WorldBorderResource implements Resource<ChunkStore> {
     public static WorldBorderResource create() {
         return new WorldBorderResource();
     }
-    public static WorldBorderResource create(int radius, com.hypixel.hytale.math.vector.Vector2i center) {
-        return new WorldBorderResource(radius, center);
+    public static WorldBorderResource create(int radius, com.hypixel.hytale.math.vector.Vector2i center, boolean enabled) {
+        return new WorldBorderResource(radius, center, enabled);
     }
 
     @Override

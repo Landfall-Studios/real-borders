@@ -22,17 +22,19 @@ public class WorldBorderCommand extends AbstractWorldCommand {
 
     private final OptionalArg<Integer> radiusArg;
     private final OptionalArg<Vector2i> centerArg;
+    private final OptionalArg<Boolean> enabledArg;
 
     public WorldBorderCommand() {
         super("worldborder", "Changes the position and size of the worldborder in the current world");
         radiusArg = withOptionalArg("radius", "Sets the radius of the worldborder", ArgTypes.INTEGER);
         centerArg = withOptionalArg("center", "Sets the center position of the worldborder", ArgTypes.VECTOR2I);
+        enabledArg = withOptionalArg("enabled", "Sets the center position of the worldborder", ArgTypes.BOOLEAN);
         this.setPermissionGroup(GameMode.Creative);
     }
 
     @Override
     protected void execute(@NonNull CommandContext commandContext, @NonNull World world, @NonNull Store<EntityStore> store) {
-        if (!commandContext.provided(radiusArg) && !commandContext.provided(centerArg)) {
+        if (!commandContext.provided(radiusArg) && !commandContext.provided(centerArg) && !commandContext.provided(enabledArg)) {
             commandContext.sendMessage(Message.raw("Usage: /worldborder --radius 3 --center 300 20"));
             return;
         }
@@ -40,7 +42,7 @@ public class WorldBorderCommand extends AbstractWorldCommand {
             var radius = commandContext.get(radiusArg);
             world.execute(() -> {
                 var border = world.getChunkStore().getStore().getResource(RealBorders.WORLD_BORDER_RES);
-                world.getChunkStore().getStore().replaceResource(RealBorders.WORLD_BORDER_RES, WorldBorderResource.create(radius, border.center));
+                world.getChunkStore().getStore().replaceResource(RealBorders.WORLD_BORDER_RES, WorldBorderResource.create(radius, border.center, border.enabled));
             });
             commandContext.sendMessage(Message.raw("Set border radius to [" + radius + "]"));
 
@@ -49,9 +51,18 @@ public class WorldBorderCommand extends AbstractWorldCommand {
             var center = commandContext.get(centerArg);
             world.execute(() -> {
                 var border = world.getChunkStore().getStore().getResource(RealBorders.WORLD_BORDER_RES);
-                world.getChunkStore().getStore().replaceResource(RealBorders.WORLD_BORDER_RES, WorldBorderResource.create(border.blockRadius, center));
+                world.getChunkStore().getStore().replaceResource(RealBorders.WORLD_BORDER_RES, WorldBorderResource.create(border.blockRadius, center, border.enabled));
             });
             commandContext.sendMessage(Message.raw("Set border center to [" + center.toString() + "]"));
         }
+        if (commandContext.provided(enabledArg)) {
+            var enabled = commandContext.get(enabledArg);
+            world.execute(() -> {
+                var border = world.getChunkStore().getStore().getResource(RealBorders.WORLD_BORDER_RES);
+                world.getChunkStore().getStore().replaceResource(RealBorders.WORLD_BORDER_RES, WorldBorderResource.create(border.blockRadius, border.center, enabled));
+            });
+            commandContext.sendMessage(Message.raw("Set enabled: [" + enabled + "]"));
+        }
+
     }
 }

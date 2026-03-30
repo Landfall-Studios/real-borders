@@ -55,6 +55,7 @@ public class EnforceBorderSystem extends DelayedEntitySystem<EntityStore> {
         var world = store.getExternalData().getWorld();
         var chunkStore = world.getChunkStore().getStore();
         var worldBorder = chunkStore.getResource(RealBorders.WORLD_BORDER_RES);
+        if (!worldBorder.enabled) return;
         var c = worldBorder.center;
         var r = worldBorder.blockRadius;
         var pos = player.getTransform().getPosition();
