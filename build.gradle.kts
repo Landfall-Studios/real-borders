@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "world.landfall"
-version = "0.1.0"
+version = "1.0.0"
 val javaVersion = 25
 
 repositories {
